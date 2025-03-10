@@ -38,13 +38,13 @@ Before running the project, ensure you have the following installed:
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Dibyendu-13/hotel-booking.git
 ```
 
 2. Navigate into the project directory:
 
 ```bash
-cd https://github.com/Dibyendu-13/hotel-booking
+cd hotel-booking
 ```
 
 3. Install the required dependencies:
