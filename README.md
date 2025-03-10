@@ -37,121 +37,223 @@ Before running the project, ensure you have the following installed:
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/Dibyendu-13/hotel-booking.git
-```
+   ```bash
+   git clone https://github.com/Dibyendu-13/hotel-booking.git
+   ```
 
 2. Navigate into the project directory:
 
-```bash
-cd hotel-booking
-```
+   ```bash
+   cd hotel-booking
+   ```
 
 3. Install the required dependencies:
 
-```bash
-cd frontend
-npm install
-```
-```bash
-cd backend
-npm install
-```
+   For the frontend:
+
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+   For the backend:
+
+   ```bash
+   cd backend
+   npm install
+   ```
 
 4. Start the development server:
 
-Frontend: 
-```bash
-npm start
-```
-Backend:
+   For the frontend:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm start
+   ```
 
+   For the backend:
 
-The application should now be accessible at `http://localhost:3000`.
+   ```bash
+   npm run dev
+   ```
 
-### Backend API
+The application should now be accessible at [http://localhost:3000](http://localhost:3000).
 
-Make sure the backend API server is running on `http://localhost:5001/api`. This server handles hotel data and booking functionality. You may need to set up your own backend or use mock data.
+Backend API
 
-## Folder Structure
-
-The project folder structure is organized as follows:
-
-```
-src/
-├── components/               # Reusable UI components (e.g., Button, InputField, Navbar)
-│   ├── Booking.js            # Booking page component
-│   ├── CheckIn.js            # Check-In page component
-│   ├── Footer.js             # Footer component
-│   ├── Header.js             # Navbar component
-│   ├── Login.js              # Login page component
-│   ├── Register.js           # Register page component
-│   ├── ThankYou.js           # Thank You page component
-├── App.js                    # Main application component (routes, state management)
-├── index.js                  # Entry point of the app
-├── styled-components/        # Custom styled components
-└── utils/                    # Utility functions (e.g., API calls, validation)
-```
-
-## Features Overview
-
-### Register Component
-
-- Users can register by providing their details (username, password).
-- The data is sent to the backend API for validation.
-
-### Login Component
-
-- Users can log in by entering their username and password.
-- Successful login redirects to the booking page.
-
-### Booking Component
-
-- Users can select a hotel from a dropdown list.
-- Users can input check-in and check-out dates.
-- Users can add family members by providing their names and Aadhaar numbers.
-- Family members can be removed from the list.
-
-### CheckIn Component
-
-- After successful booking, users can check in to the hotel.
-
-### ThankYou Component
-
-- Displays a confirmation message after a successful booking.
+Make sure the backend API server is running on [http://localhost:5001/api](http://localhost:5001/api). This server handles hotel data and booking functionality. You may need to set up your own backend or use mock data.
 
 ## API Endpoints
 
-### /api/hotels
+### Hotels Endpoints
 
-- **GET**: Fetch all hotels available for booking.
+#### GET /api/hotels
 
-### /api/booking
+**Description**: Fetch all hotels available for booking.
 
-- **POST**: Submit a booking with user details, hotel choice, dates, and family members.
+**Response**:
+
+```json
+{
+  "hotels": [
+    {
+      "id": "1",
+      "name": "Grand Plaza",
+      "location": "New York",
+      "available_rooms": 20
+    },
+    {
+      "id": "2",
+      "name": "Royal Suite",
+      "location": "Los Angeles",
+      "available_rooms": 15
+    }
+  ]
+}
+```
+
+### Booking Endpoints
+
+#### POST /api/booking
+
+**Description**: Submit a booking with user details, hotel choice, dates, and family members.
+
+**Request Body**:
+
+```json
+{
+  "user_id": "123",
+  "hotel_id": "1",
+  "check_in_date": "2025-05-01",
+  "check_out_date": "2025-05-07",
+  "family_members": [
+    {
+      "name": "John Doe",
+      "aadhaar_number": "1234-5678-9012"
+    },
+    {
+      "name": "Jane Doe",
+      "aadhaar_number": "2345-6789-0123"
+    }
+  ]
+}
+```
+
+**Response**:
+
+```json
+{
+  "message": "Booking successful",
+  "booking_id": "abc123",
+  "hotel_name": "Grand Plaza",
+  "check_in_date": "2025-05-01",
+  "check_out_date": "2025-05-07"
+}
+```
+
+### Check-In Endpoints
+
+#### POST /api/checkin
+
+**Description**: Check in to the hotel after a successful booking.
+
+**Request Body**:
+
+```json
+{
+  "booking_id": "abc123",
+  "user_id": "123"
+}
+```
+
+**Response**:
+
+```json
+{
+  "status": "success",
+  "message": "Check-in successful"
+}
+```
+
+### User Registration Endpoints
+
+#### POST /api/register
+
+**Description**: Register a new user with their details.
+
+**Request Body**:
+
+```json
+{
+  "username": "johndoe",
+  "password": "securepassword123",
+  "email": "johndoe@example.com"
+}
+```
+
+**Response**:
+
+```json
+{
+  "status": "success",
+  "message": "User registered successfully"
+}
+```
+
+### User Login Endpoints
+
+#### POST /api/login
+
+**Description**: Log in with username and password.
+
+**Request Body**:
+
+```json
+{
+  "username": "johndoe",
+  "password": "securepassword123"
+}
+```
+
+**Response**:
+
+```json
+{
+  "status": "success",
+  "message": "Login successful",
+  "token": "jwt-token"
+}
+```
 
 ## Environment Variables
 
-- Make sure to set up the environment variables as required by your backend API server (e.g., database configurations).
+Ensure the following environment variables are set for both the backend and frontend:
 
-## License
+### Backend (in .env file)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **DB_URI**: MongoDB connection URI.
+- **PORT**: Port for backend server (default: 5001).
+- **JWT_SECRET**: Secret key for JWT token generation.
 
-## Acknowledgments
+### Frontend (in .env file)
 
-- React and styled-components for building modern web applications.
-- Axios for handling API requests.
-- React Router for managing routes in a single-page application.
-- React Toastify for notifications.
+- **REACT_APP_API_URL**: URL for the backend API (default: http://localhost:5001/api).
 
 ## Future Improvements
 
 - Implement user authentication with JWT tokens.
-- Improve error handling and validation.
-- Add a payment gateway for booking confirmations.
+- Add payment gateway for booking confirmations.
+- Implement more advanced error handling and validation for bookings.
+- Add user profile management with booking history.
 
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- React and styled-components for building the UI.
+- Express and MongoDB for the backend API.
+- Axios for making HTTP requests.
+- React Router for navigation.
+- React Toastify for notifications.
